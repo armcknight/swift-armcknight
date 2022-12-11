@@ -6,15 +6,15 @@ let package = Package(
     name: "swift-armcknight",
     products: [
         .library(
-            name: "swift-armcknight",
-            targets: ["swift-armcknight"]),
+            name: "SwiftArmcknight",
+            targets: ["SwiftArmcknight"]),
     ],
     targets: [
         .target(
-            name: "swift-armcknight"
+            name: "SwiftArmcknight"
 	    ),
         .testTarget(
-            name: "swift-armcknight-test",
+            name: "SwiftArmcknightTest",
             dependencies: ["swift-armcknight"]),
     ]
 )
