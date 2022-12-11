@@ -11,11 +11,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "SwiftArmcknight",
-            sources: [
-                "Foundation",
-                "XCTest",
-            ]
+            name: "SwiftArmcknight"
         ),
         .testTarget(
             name: "SwiftArmcknightTest",
