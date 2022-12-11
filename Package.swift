@@ -14,6 +14,6 @@ let package = Package(
             name: "SwiftArmcknight"),
         .testTarget(
             name: "SwiftArmcknightTest",
-            dependencies: ["swift-armcknight"]),
+            dependencies: ["SwiftArmcknight"]),
     ]
 )
