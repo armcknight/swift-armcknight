@@ -11,8 +11,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "SwiftArmcknight"
-	    ),
+            name: "SwiftArmcknight"),
         .testTarget(
             name: "SwiftArmcknightTest",
             dependencies: ["swift-armcknight"]),
