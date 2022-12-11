@@ -11,7 +11,12 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "SwiftArmcknight"),
+            name: "SwiftArmcknight",
+            sources: [
+                "Foundation",
+                "XCTest",
+            ]
+        ),
         .testTarget(
             name: "SwiftArmcknightTest",
             dependencies: ["SwiftArmcknight"]),
