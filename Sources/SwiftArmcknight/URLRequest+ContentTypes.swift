@@ -1,6 +1,6 @@
 //
 //  URLRequest+ContentTypes.swift
-//  PippinLibrary
+// swift-armcknightLibrary
 //
 //  Created by Andrew McKnight on 8/8/20.
 //

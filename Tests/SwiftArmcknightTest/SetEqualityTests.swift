@@ -1,6 +1,6 @@
 //
 //  SetEqualityTests.swift
-//  Pippin-Unit-Tests
+// swift-armcknight-Unit-Tests
 //
 //  Created by Andrew McKnight on 11/30/18.
 //

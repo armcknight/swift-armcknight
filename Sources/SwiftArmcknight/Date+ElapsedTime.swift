@@ -1,6 +1,6 @@
 //
 //  Date+ElapsedTime.swift
-//  Pippin
+// swift-armcknight
 //
 //  Created by Andrew McKnight on 8/26/18.
 //

@@ -1,6 +1,6 @@
 //
 //  Set+Equality.swift
-//  Pippin
+// swift-armcknight
 //
 //  Created by Andrew McKnight on 11/30/18.
 //

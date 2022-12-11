@@ -1,6 +1,6 @@
 //
 //  Tribool.swift
-//  Pippin
+// swift-armcknight
 //
 //  Created by Andrew McKnight on 10/31/16.
 //  Copyright © 2017 andrew mcknight. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  Dictionary+Sort.swift
-//  Pippin
+// swift-armcknight
 //
 //  Created by Andrew McKnight on 1/7/19.
 //

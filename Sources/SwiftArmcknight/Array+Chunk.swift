@@ -1,6 +1,6 @@
 //
 //  Array+Chunk.swift
-//  Pippin
+// swift-armcknight
 //
 //  Created by Andrew McKnight on 12/17/18.
 //

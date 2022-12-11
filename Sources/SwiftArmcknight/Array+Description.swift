@@ -1,6 +1,6 @@
 //
 //  Array+Description.swift
-//  PippinLibrary
+// swift-armcknightLibrary
 //
 //  Created by Andrew McKnight on 12/18/21.
 //

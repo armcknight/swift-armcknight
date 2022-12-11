@@ -1,6 +1,6 @@
 //
 //  ULLONG_MAX.swift
-//  Pippin
+// swift-armcknight
 //
 //  Created by Andrew McKnight on 2/26/17.
 //  Copyright © 2017 Two Ring Software. All rights reserved.

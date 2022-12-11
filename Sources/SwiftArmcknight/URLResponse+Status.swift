@@ -1,6 +1,6 @@
 //
 //  NSURLResponse+Status.swift
-//  PippinLibrary
+// swift-armcknightLibrary
 //
 //  Created by Andrew McKnight on 4/24/20.
 //

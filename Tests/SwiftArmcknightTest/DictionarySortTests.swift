@@ -1,11 +1,10 @@
 //
 //  DictionarySortTests.swift
-//  Pippin-Unit-Tests
+// swift-armcknight-Unit-Tests
 //
 //  Created by Andrew McKnight on 1/8/19.
 //
 
-import PippinLibrary
 import XCTest
 
 class DictionarySortTests: XCTestCase {

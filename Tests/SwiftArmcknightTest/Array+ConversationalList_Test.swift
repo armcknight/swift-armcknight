@@ -1,11 +1,10 @@
 //
 //  Array+ConversationalList_Test.swift
-//  PippinLibrary-Unit-Tests
+// swift-armcknightLibrary-Unit-Tests
 //
 //  Created by Andrew McKnight on 4/19/20.
 //
 
-import PippinLibrary
 import XCTest
 
 class Array_ConversationalList_Test: XCTestCase {

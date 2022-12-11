@@ -1,6 +1,6 @@
 //
 //  String+NumericValues_Test.swift
-//  PippinTests
+// swift-armcknightTests
 //
 //  Created by Andrew McKnight on 3/14/17.
 //

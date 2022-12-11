@@ -1,6 +1,6 @@
 //
 //  CGFloat+LayoutConstants.swift
-//  Pippin
+// swift-armcknight
 //
 //  Created by Andrew McKnight on 4/23/18.
 //

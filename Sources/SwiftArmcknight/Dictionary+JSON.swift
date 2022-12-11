@@ -1,6 +1,6 @@
 //
 //  Dictionary+JSON.swift
-//  Pippin
+// swift-armcknight
 //
 //  Created by Andrew McKnight on 7/15/17.
 //  Copyright © 2017 Two Ring Software. All rights reserved.

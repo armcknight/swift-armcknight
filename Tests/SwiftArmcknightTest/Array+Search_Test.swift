@@ -1,6 +1,6 @@
 //
 //  Array+Search_Test.swift
-//  PippinTests
+// swift-armcknightTests
 //
 //  Created by Andrew McKnight on 3/16/17.
 //

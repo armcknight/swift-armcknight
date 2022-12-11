@@ -1,6 +1,6 @@
 //
 //  String+CSV.swift
-//  Pippin
+// swift-armcknight
 //
 //  Created by Andrew McKnight on 1/8/19.
 //

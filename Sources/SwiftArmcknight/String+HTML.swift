@@ -1,6 +1,6 @@
 //
 //  String+HTML.swift
-//  PippinLibrary
+// swift-armcknightLibrary
 //
 //  Created by Andrew McKnight on 7/28/17.
 //  Copyright © 2019 Two Ring Software. All rights reserved.

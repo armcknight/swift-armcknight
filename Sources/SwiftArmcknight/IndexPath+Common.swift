@@ -1,6 +1,6 @@
 //
 //  IndexPath+Common.swift
-//  PippinTests
+// swift-armcknightTests
 //
 //  Created by Andrew McKnight on 3/18/17.
 //

@@ -1,6 +1,6 @@
 //
 //  ProcessInfo+LaunchArguments.swift
-//  Pippin
+// swift-armcknight
 //
 //  Created by Andrew McKnight on 09/15/18.
 //

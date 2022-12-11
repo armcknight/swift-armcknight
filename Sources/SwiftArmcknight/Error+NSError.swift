@@ -1,6 +1,6 @@
 //
 //  Error+NSError.swift
-//  Pippin
+// swift-armcknight
 //
 //  Created by Andrew McKnight on 3/9/19.
 //
@@ -18,6 +18,6 @@ public protocol NSErrorConvertible: Swift.Error {
 
 public extension NSErrorConvertible {
     var nsError: NSError {
-        return NSError(domain: String(asRDNSForPippinSubpaths: ["error"]), code: code, userInfo: nil)
+        return NSError(domain: String(asRDNSForCurrentAppWithSubpaths: ["error"]), code: code, userInfo: nil)
     }
 }

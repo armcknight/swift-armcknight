@@ -1,6 +1,6 @@
 //
 //  CGFloat+ThemeConstants.swift
-//  Pippin
+// swift-armcknight
 //
 //  Created by Andrew McKnight on 1/24/19.
 //

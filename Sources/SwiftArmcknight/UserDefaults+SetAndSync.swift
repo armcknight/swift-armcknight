@@ -1,6 +1,6 @@
 //
 //  UserDefaults+SetAndSync.swift
-//  Pippin
+// swift-armcknight
 //
 //  Created by Andrew McKnight on 9/13/18.
 //

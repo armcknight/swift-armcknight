@@ -1,6 +1,6 @@
 //
 //  Double+Random.swift
-//  Pippin
+// swift-armcknight
 //
 //  Created by Andrew McKnight on 1/3/18.
 //

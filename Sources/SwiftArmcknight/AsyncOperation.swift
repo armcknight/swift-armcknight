@@ -1,6 +1,6 @@
 //
 //  AsyncOperation.swift
-//  Pippin
+// swift-armcknight
 //
 //  Created by Andrew McKnight on 8/30/18.
 //
@@ -27,7 +27,7 @@ open class AsyncOperation: Operation {
     
     public override init() {
         super.init()
-        lock.name = String(asRDNSForPippinSubpaths: ["lock", classType(AsyncOperation.self)])
+        lock.name = String(asRDNSForCurrentAppWithSubpaths: ["lock", classType(AsyncOperation.self)])
     }
     
     open override var isConcurrent: Bool { return true }

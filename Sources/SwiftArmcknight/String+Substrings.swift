@@ -1,6 +1,6 @@
 //
 //  String+Substrings.swift
-//  PippinLibrary
+// swift-armcknightLibrary
 //
 //  Created by Andrew McKnight on 12/19/21.
 //

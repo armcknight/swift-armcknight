@@ -1,6 +1,6 @@
 //
 //  CGSize+Init.swift
-//  Pippin
+// swift-armcknight
 //
 //  Created by Andrew McKnight on 1/2/19.
 //

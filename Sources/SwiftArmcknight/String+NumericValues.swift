@@ -1,6 +1,6 @@
 //
 //  String+NumericValues.swift
-//  Pippin
+// swift-armcknight
 //
 //  Created by Andrew McKnight on 12/18/16.
 //  Copyright © 2016 Two Ring Software. All rights reserved.

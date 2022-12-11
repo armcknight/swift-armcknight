@@ -1,6 +1,6 @@
 //
 //  Dictionary+Plist.swift
-//  Pippin
+// swift-armcknight
 //
 //  Created by Andrew McKnight on 11/29/18.
 //

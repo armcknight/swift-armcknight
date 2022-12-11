@@ -1,6 +1,6 @@
 //
 //  CompoundOperation.swift
-//  Pippin
+// swift-armcknight
 //
 //  Created by Andrew McKnight on 11/8/18.
 //
@@ -10,7 +10,7 @@ import Foundation
 enum CompoundOperationError: NSErrorConvertible {
     case suboperationFailure(String, [Error])
 
-    public static let nsErrorDomain = String(asRDNSForPippinSubpaths: ["error", "domain", "compound-operation"])
+    public static let nsErrorDomain = String(asRDNSForCurrentAppWithSubpaths: ["error", "domain", "compound-operation"])
 
     var code: Int {
         switch self {
@@ -37,12 +37,12 @@ enum CompoundOperationErrorUserInfoKey: CustomStringConvertible {
         switch self {
         case .underlyingErrors: name = "underlying-errors"
         }
-        return String(asRDNSForPippinSubpaths: ["error.user-info-key.compound-operation", name])
+        return String(asRDNSForCurrentAppWithSubpaths: ["error.user-info-key.compound-operation", name])
     }
 }
 
 open class CompoundOperation: AsyncOperation {
-    static let CompoundOperationCountingQueueLabel = String(asRDNSForPippinSubpaths: ["dispatch-queue", "label", "compound-counting-queue"])
+    static let CompoundOperationCountingQueueLabel = String(asRDNSForCurrentAppWithSubpaths: ["dispatch-queue", "label", "compound-counting-queue"])
 
     @objc public let compoundQueue = OperationQueue()
     var completedOperations = 0
