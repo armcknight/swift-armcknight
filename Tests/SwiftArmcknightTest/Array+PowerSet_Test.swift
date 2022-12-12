@@ -5,6 +5,7 @@
 //  Created by Andrew McKnight on 4/19/20.
 //
 
+import SwiftArmcknight
 import XCTest
 
 class Array_PowerSet_Test: XCTestCase {

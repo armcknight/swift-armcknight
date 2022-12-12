@@ -6,6 +6,7 @@
 //
 //
 
+import SwiftArmcknight
 import XCTest
 
 class Tribool_Test: XCTestCase {

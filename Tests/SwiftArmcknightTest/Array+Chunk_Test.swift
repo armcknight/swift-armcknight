@@ -5,6 +5,7 @@
 //  Created by Andrew McKnight on 12/17/18.
 //
 
+import SwiftArmcknight
 import XCTest
 
 class Array_Chunk_Test: XCTestCase {
