@@ -1,8 +1,9 @@
 //
 //  String+NumericValues_Test.swift
-// swift-armcknightTests
+//  swift-armcknight
 //
 //  Created by Andrew McKnight on 3/14/17.
+//  Copyright © Andrew McKnight 2016-2022
 //
 //
 

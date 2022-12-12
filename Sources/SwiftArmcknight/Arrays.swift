@@ -1,9 +1,9 @@
 //
 //  Arrays.swift
-//  ProjectEuler
+//  swift-armcknight
 //
 //  Created by Andrew McKnight on 5/20/17.
-//  Copyright © 2017 AMProductions. All rights reserved.
+//  Copyright © Andrew McKnight 2016-2022
 //
 
 import Foundation

@@ -1,9 +1,9 @@
 //
 //  Factorial.swift
-//  ProjectEuler
+//  swift-armcknight
 //
 //  Created by Andrew McKnight on 1/11/16.
-//  Copyright © 2016 AMProductions. All rights reserved.
+//  Copyright © Andrew McKnight 2016-2022
 //
 
 import Foundation

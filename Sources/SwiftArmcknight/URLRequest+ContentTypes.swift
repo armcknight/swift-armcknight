@@ -1,8 +1,9 @@
 //
 //  URLRequest+ContentTypes.swift
-// swift-armcknightLibrary
+//  swift-armcknight
 //
 //  Created by Andrew McKnight on 8/8/20.
+//  Copyright © Andrew McKnight 2016-2022
 //
 
 import Foundation

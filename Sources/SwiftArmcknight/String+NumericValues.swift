@@ -1,9 +1,9 @@
 //
 //  String+NumericValues.swift
-// swift-armcknight
+//  swift-armcknight
 //
 //  Created by Andrew McKnight on 12/18/16.
-//  Copyright © 2016 Two Ring Software. All rights reserved.
+//  Copyright © Andrew McKnight 2016-2022
 //
 
 import Foundation

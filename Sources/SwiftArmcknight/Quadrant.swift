@@ -1,8 +1,9 @@
 //
 //  Quadrant.swift
-// swift-armcknight
+//  swift-armcknight
 //
 //  Created by Andrew McKnight on 9/11/18.
+//  Copyright © Andrew McKnight 2016-2022
 //
 
 import Foundation

@@ -1,8 +1,9 @@
 //
 //  AsyncOperation.swift
-// swift-armcknight
+//  swift-armcknight
 //
 //  Created by Andrew McKnight on 8/30/18.
+//  Copyright © Andrew McKnight 2016-2022
 //
 
 import Foundation

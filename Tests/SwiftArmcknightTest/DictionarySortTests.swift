@@ -1,8 +1,9 @@
 //
 //  DictionarySortTests.swift
-// swift-armcknight-Unit-Tests
+//  swift-armcknight
 //
 //  Created by Andrew McKnight on 1/8/19.
+//  Copyright © Andrew McKnight 2016-2022
 //
 
 import XCTest

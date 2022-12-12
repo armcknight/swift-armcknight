@@ -1,8 +1,9 @@
 //
 //  Double+Random.swift
-// swift-armcknight
+//  swift-armcknight
 //
 //  Created by Andrew McKnight on 1/3/18.
+//  Copyright © Andrew McKnight 2016-2022
 //
 
 import Foundation

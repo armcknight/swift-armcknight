@@ -1,6 +1,6 @@
 //
 //  Collection+Flatten.swift
-// swift-armcknight
+//  swift-armcknight
 //
 //  Created by Andrew McKnight on 12/18/21.
 //

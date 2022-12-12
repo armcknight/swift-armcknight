@@ -1,8 +1,9 @@
 //
 //  String+Substrings.swift
-// swift-armcknightLibrary
+//  swift-armcknight
 //
 //  Created by Andrew McKnight on 12/19/21.
+//  Copyright © Andrew McKnight 2016-2022
 //
 
 import Foundation

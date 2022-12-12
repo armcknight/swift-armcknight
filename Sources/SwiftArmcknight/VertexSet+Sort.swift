@@ -1,9 +1,9 @@
 //
 //  VertexSet+Sort.swift
-//  Delaunay
+//  swift-armcknight
 //
 //  Created by Andrew McKnight on 11/19/17.
-//  Copyright © 2017 old dominion university. All rights reserved.
+//  Copyright © Andrew McKnight 2016-2022
 //
 
 import Foundation

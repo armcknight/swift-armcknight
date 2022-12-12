@@ -1,9 +1,9 @@
 //
 //  Dictionary+JSON.swift
-// swift-armcknight
+//  swift-armcknight
 //
 //  Created by Andrew McKnight on 7/15/17.
-//  Copyright © 2017 Two Ring Software. All rights reserved.
+//  Copyright © Andrew McKnight 2016-2022
 //
 
 import Foundation

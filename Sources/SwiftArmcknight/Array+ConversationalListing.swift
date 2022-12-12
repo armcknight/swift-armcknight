@@ -1,6 +1,6 @@
 //
 //  Array+ConversationalListing.swift
-// swift-armcknightLibrary
+//  swift-armcknight
 //
 //  Created by Andrew McKnight on 4/19/20.
 //

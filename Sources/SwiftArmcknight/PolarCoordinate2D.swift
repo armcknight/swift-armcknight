@@ -1,9 +1,9 @@
 //
 //  PolarCoordinate2D.swift
-//  TrigKit
+//  swift-armcknight
 //
 //  Created by Andrew McKnight on 3/4/17.
-//  Copyright © 2017 Andrew McKnight. All rights reserved.
+//  Copyright © Andrew McKnight 2016-2022
 //
 
 import Foundation

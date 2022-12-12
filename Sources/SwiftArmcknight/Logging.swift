@@ -1,8 +1,9 @@
 //
-// Logging.swift
-// swift-armcknight
+//  Logging.swift
+//  swift-armcknight
 //
 //  Created by Andrew McKnight on 11/20/17.
+//  Copyright © Andrew McKnight 2016-2022
 //
 
 import Foundation

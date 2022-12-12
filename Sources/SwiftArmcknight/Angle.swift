@@ -1,6 +1,6 @@
 //
 //  Angle.swift
-// swift-armcknight
+//  swift-armcknight
 //
 //  Created by Andrew McKnight on 9/11/18.
 //

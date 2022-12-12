@@ -1,9 +1,9 @@
 //
 //  FileManager+URLs.swift
-// swift-armcknightLibrary
+//  swift-armcknight
 //
 //  Created by Andrew McKnight on 7/31/17.
-//  Copyright © 2019 Two Ring Software. All rights reserved.
+//  Copyright © Andrew McKnight 2016-2022
 //
 
 import Foundation
