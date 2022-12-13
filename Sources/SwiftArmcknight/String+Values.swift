@@ -11,7 +11,7 @@ import Foundation
 public extension String {
     /// Break up a multiline string into an array of each line's string value.
     var lines: [String] {
-        return split(separator: "\n").map({String($0)})
+        return components(separatedBy: "\n").map({String($0)})
     }
 
     /// Break up a multiline string into a 2D array of all the characters. Thus '"`abc\ndef\nghi`" becomes `[['a', 'b', 'c'],['d', 'e', 'f'], ['g', 'h', 'i']]`.
