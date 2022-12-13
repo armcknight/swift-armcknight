@@ -45,4 +45,11 @@ public extension String {
             return (String(parts.first!), String(parts.last!).integerValue)
         }
     }
+
+    var pairs: [(String, String)] {
+        lines.map {
+            let parts = $0.split(separator: " ")
+            return (String(parts[0]), String(parts[1]))
+        }
+    }
 }
