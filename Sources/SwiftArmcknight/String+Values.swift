@@ -9,16 +9,8 @@
 import Foundation
 
 public extension String {
-    /// Break up a multiline string into an array of each line's string value.
-    var lines: [String] {
-        return split(separator: "\n").map({String($0)})
-    }
-
-    /// Break up a multiline string into a 2D array of all the characters. Thus '"`abc\ndef\nghi`" becomes `[['a', 'b', 'c'],['d', 'e', 'f'], ['g', 'h', 'i']]`.
-    var characterGrid: [[String]] {
-        return lines.map {
-            return $0.map({String($0)})
-        }
+    var midpoint: Index {
+        index(startIndex, offsetBy: count / 2)
     }
 
     /// Break up a multiline string containing integers 0-9 into a 2D array of those single digit integer values. Thus "`12\n34`" becomes `[[1, 2], [3, 4]]` and not `[[12], [34]]`.
