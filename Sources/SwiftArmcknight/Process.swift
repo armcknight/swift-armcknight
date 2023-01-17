@@ -53,8 +53,8 @@ public extension Process {
             } else {
                 pipe.fileHandleForWriting.closeFile()
             }
+            process.standardInput = pipe
         }
-        process.standardInput = pipe
 
         if let stdout {
             process.standardOutput = stdout
