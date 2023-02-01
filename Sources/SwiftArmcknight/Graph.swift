@@ -190,17 +190,21 @@ public class Graph<EdgeType: EdgeProtocol>: LosslessGraphVizDotDescriptionConver
         }
     }()
 
-    public init(adjacencyMatrix: [[EdgeType.Weight?]], nodes: [EdgeType.NodeType]) {
+    let initialFloydWarshallValue: EdgeType.Weight
+
+    public init(adjacencyMatrix: [[EdgeType.Weight?]], nodes: [EdgeType.NodeType], initialFloydWarshallValue: EdgeType.Weight) {
         // We want a typed, ordered collection of unique nodes. Since there is no swift generic ordered set, we ensure that there are no duplicate nodes using a precondition.
         precondition(nodes.count == Set(nodes).count)
 
         self.initializedWithList = false
+        self.initialFloydWarshallValue = initialFloydWarshallValue
         self.adjacencyMatrix = adjacencyMatrix
         self.nodes = nodes
     }
 
-    public init(adjacencyList: [EdgeType.NodeType : Set<EdgeType>]) {
+    public init(adjacencyList: [EdgeType.NodeType : Set<EdgeType>], initialFloydWarshallValue: EdgeType.Weight) {
         self.initializedWithList = true
+        self.initialFloydWarshallValue = initialFloydWarshallValue
         self.adjacencyList = adjacencyList
     }
 
@@ -242,9 +246,17 @@ public class Graph<EdgeType: EdgeProtocol>: LosslessGraphVizDotDescriptionConver
         return []
     }
 
+    /// Uses the Floyd-Warshall algorithm for computing all-pairs shortest paths in a weighted directed graph.
+    /// - precondition: `graph` must have no negative weight cycles
+    /// - complexity: `Θ(V^3)` time, `Θ(V^2)` space
+    /// - note: In all complexity bounds, `V` is the number of vertices in the graph, and `E` is the number of edges.
     /// - Returns: the collection of shortest paths from each node to every other node, if such a path exists between any given pair of nodes.
-    func allPairsShortestPaths() -> Set<[EdgeType.NodeType]> {
-        return [] // TODO: implement
+    func allPairsShortestPaths<T>() -> FloydWarshallResult<T>? where T: EdgeWeightType {
+        guard !hasNegativeEdgeWeights else {
+            return nil
+        }
+        let result: FloydWarshallResult<T> = floydWarshall()
+        return result
     }
 
     /// - Returns: the collection of strongly connected components.
@@ -311,5 +323,189 @@ private extension Graph {
             currentNode = currentNodes.min { ($0.djikstraWeight as! EdgeType.Weight) < ($1.djikstraWeight as! EdgeType.Weight) }
         }
         return currentNode?.djikstraPath as! [EdgeType.NodeType]
+    }
+}
+
+// Floyd-Warshall logic to compute all-pairs shortest paths
+extension Graph {
+    /**
+     `FloydWarshallResult` encapsulates the result of the computation, namely the
+     minimized distance adjacency matrix, and the matrix of predecessor indices.
+
+     It conforms to the `APSPResult` procotol which provides methods to retrieve
+     distances and paths between given pairs of start and end nodes.
+     */
+    struct FloydWarshallResult<T> where T: Hashable {
+
+        fileprivate var weights: Distances
+        fileprivate var predecessors: Predecessors
+
+        /// - complexity: `Θ(1)` time/space
+        /// - Returns: the total weight of the path from a starting vertex to a destination. This value is the minimal connected weight between the two vertices, or `nil` if no path exists
+        func distance(fromVertex from: EdgeType.NodeType, toVertex to: EdgeType.NodeType) -> EdgeType.Weight? {
+            return weights[from.index][to.index]
+        }
+
+        /// - complexity: `Θ(V)` time, `Θ(V^2)` space
+        /// - Returns: the reconstructed path from a starting vertex to a destination, as an ordered array, or `nil` if no path exists
+        func path(fromVertex from: EdgeType.NodeType, toVertex to: EdgeType.NodeType, nodes: [EdgeType.NodeType]) -> [EdgeType.NodeType]? {
+            return recursePathFrom(fromVertex: from, toVertex: to, path: [ to ], nodes: nodes)
+        }
+
+        /// The recursive component to rebuilding the shortest path between two vertices using the predecessor matrix.
+        /// - Returns: the list of predecessors discovered so far
+        func recursePathFrom(fromVertex from: EdgeType.NodeType, toVertex to: EdgeType.NodeType, path: [EdgeType.NodeType], nodes: [EdgeType.NodeType]) -> [EdgeType.NodeType]? {
+            if from.index == to.index {
+                return [ from, to ]
+            }
+
+            if let predecessor = predecessors[from.index][to.index] {
+                let predecessorVertex = nodes[predecessor]
+                if predecessor == from.index {
+                    let newPath = [ from, to ]
+                    return newPath
+                } else {
+                    let buildPath = recursePathFrom(fromVertex: from, toVertex: predecessorVertex, path: path, nodes: nodes)
+                    let newPath = buildPath! + [ to ]
+                    return newPath
+                }
+            }
+            return nil
+        }
+
+    }
+}
+
+private extension Graph {
+    typealias Distances = [[EdgeType.Weight]]
+    typealias Predecessors = [[Int?]]
+    typealias StepResult = (distances: Distances, predecessors: Predecessors)
+
+    /// - complexity: `Θ(V^3)` time, `Θ(V^2)` space
+    /// - returns: a `FloydWarshallResult` struct which can be queried for shortest paths and their total weights
+    /// - note: The following logic in this scope and related code added with it is
+    /// based on the implementation of Djikstra's algorithm from the Swift
+    /// Algorithm Club, which requires the following license text to appear
+    /// with it. However, also note that I was the contributor of this algorithm to the Swift Algorithm Club!
+    /// ```
+    /// Copyright (c) 2016 Matthijs Hollemans and contributors
+    ///
+    /// Permission is hereby granted, free of charge, to any person obtaining a copy
+    /// of this software and associated documentation files (the "Software"), to deal
+    /// in the Software without restriction, including without limitation the rights
+    /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    /// copies of the Software, and to permit persons to whom the Software is
+    /// furnished to do so, subject to the following conditions:
+    ///
+    /// The above copyright notice and this permission notice shall be included in
+    /// all copies or substantial portions of the Software.
+    ///
+    /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    /// THE SOFTWARE.
+    /// ```
+    func floydWarshall<T: EdgeWeightType>() -> FloydWarshallResult<T> {
+        var previousDistance = constructInitialDistanceMatrix()
+        var previousPredecessor = constructInitialPredecessorMatrix(previousDistance)
+        for intermediateIdx in 0 ..< nodes.count {
+            let nextResult = nextStep(intermediateIdx, previousDistances: previousDistance, previousPredecessors: previousPredecessor)
+            previousDistance = nextResult.distances
+            previousPredecessor = nextResult.predecessors
+
+            //                // uncomment to see each new weight matrix
+            //                print("  D(\(k)):\n")
+            //                printMatrix(nextResult.distances)
+            //
+            //                // uncomment to see each new predecessor matrix
+            //                print("  ∏(\(k)):\n")
+            //                printIntMatrix(nextResult.predecessors)
+        }
+        return FloydWarshallResult<T>(weights: previousDistance, predecessors: previousPredecessor)
+    }
+
+    /// For each iteration of `intermediateIdx`, perform the comparison for the dynamic algorithm, checking for each pair of start/end vertices, whether a path taken through another vertex produces a shorter path.
+    /// - complexity: `Θ(V^2)` time/space
+    /// - returns: a tuple containing the next distance matrix with weights of currently known shortest paths and the corresponding predecessor matrix
+    func nextStep(_ intermediateIdx: Int, previousDistances: Distances,
+                  previousPredecessors: Predecessors) -> StepResult {
+
+        let vertexCount = nodes.count
+        var nextDistances = Array(repeating: Array(repeating: initialFloydWarshallValue, count: vertexCount), count: vertexCount)
+        var nextPredecessors = Array(repeating: Array<Int?>(repeating: nil, count: vertexCount), count: vertexCount)
+
+        for fromIdx in 0 ..< vertexCount {
+            for toIndex in 0 ..< vertexCount {
+                //        printMatrix(previousDistances, i: fromIdx, j: toIdx, k: intermediateIdx) // uncomment to see each comparison being made
+                let originalPathWeight = previousDistances[fromIdx][toIndex]
+                let newPathWeightBefore = previousDistances[fromIdx][intermediateIdx]
+                let newPathWeightAfter = previousDistances[intermediateIdx][toIndex]
+
+                let minimum = min(originalPathWeight, newPathWeightBefore + newPathWeightAfter)
+                nextDistances[fromIdx][toIndex] = minimum
+
+                var predecessor: Int?
+                if originalPathWeight <= newPathWeightBefore + newPathWeightAfter {
+                    predecessor = previousPredecessors[fromIdx][toIndex]
+                } else {
+                    predecessor = previousPredecessors[intermediateIdx][toIndex]
+                }
+                nextPredecessors[fromIdx][toIndex] = predecessor
+            }
+        }
+        return (nextDistances, nextPredecessors)
+
+    }
+
+    /**
+     We need to map the graph's weight domain onto the one required by the algorithm: the graph
+     stores either a weight as a `Double` or `nil` if no edge exists between two vertices, but
+     the algorithm needs a lack of an edge represented as ∞ for the `min` comparison to work correctly.
+
+     - complexity: `Θ(V^2)` time/space
+     - returns: weighted adjacency matrix in form ready for processing with Floyd-Warshall
+     */
+    func constructInitialDistanceMatrix() -> Distances {
+        var distances = Array(repeating: Array(repeating: initialFloydWarshallValue, count: nodes.count), count: nodes.count)
+
+        for row in nodes {
+            for col in nodes {
+                let rowIdx = row.index
+                let colIdx = col.index
+                if rowIdx == colIdx {
+                    distances[rowIdx][colIdx] = 0 as! EdgeType.Weight
+                } else if let w = weight(from: row, to: col) {
+                    distances[rowIdx][colIdx] = w
+                }
+            }
+        }
+
+        return distances
+
+    }
+
+    /**
+     Make the initial predecessor index matrix. Initially each value is equal to it's row index, it's "from" index when querying into it.
+
+     - complexity: `Θ(V^2)` time/space
+     */
+    func constructInitialPredecessorMatrix(_ distances: Distances) -> Predecessors {
+
+        let vertexCount = distances.count
+        var predecessors = Array(repeating: Array<Int?>(repeating: nil, count: vertexCount), count: vertexCount)
+
+        for fromIdx in 0 ..< vertexCount {
+            for toIdx in 0 ..< vertexCount {
+                if fromIdx != toIdx && distances[fromIdx][toIdx] < initialFloydWarshallValue {
+                    predecessors[fromIdx][toIdx] = fromIdx
+                }
+            }
+        }
+
+        return predecessors
+
     }
 }

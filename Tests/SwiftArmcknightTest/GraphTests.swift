@@ -164,6 +164,8 @@ private extension GraphTest {
 
         typealias FixtureGraphType = DirectedEdge<Node<String>, Double>
 
+        // TODO: add test case for Int edge weights instead of Double. Will need different Djikstra starting values analogous to Double.infinity, maybe Int.max? or make it optional, or add a boolean flag for whether it's been computed or not
+
         /**
          * A fully connected graph.
          *
@@ -239,8 +241,8 @@ private extension GraphTest {
             ]
 
             return Fixture<FixtureGraphType>(
-                adjacencyListRepresentation: Graph(adjacencyList: adjacencyList),
-                adjacencyMatrixRepresentation: Graph<FixtureGraphType>(adjacencyMatrix: adjacencyMatrix, nodes: nodes),
+                adjacencyListRepresentation: Graph(adjacencyList: adjacencyList, initialFloydWarshallValue: Double.infinity),
+                adjacencyMatrixRepresentation: Graph<FixtureGraphType>(adjacencyMatrix: adjacencyMatrix, nodes: nodes, initialFloydWarshallValue: Double.infinity),
                 adjacencyMatrix: adjacencyMatrix,
                 adjacencyList: adjacencyList,
                 nodes: Set(nodes),
@@ -273,8 +275,8 @@ private extension GraphTest {
             let adjacencyList = [Node<String> : Set<FixtureGraphType>]()
 
             return Fixture<FixtureGraphType>(
-                adjacencyListRepresentation: Graph(adjacencyList: adjacencyList),
-                adjacencyMatrixRepresentation: Graph<FixtureGraphType>(adjacencyMatrix: adjacencyMatrix, nodes: nodes),
+                adjacencyListRepresentation: Graph(adjacencyList: adjacencyList, initialFloydWarshallValue: Double.infinity),
+                adjacencyMatrixRepresentation: Graph<FixtureGraphType>(adjacencyMatrix: adjacencyMatrix, nodes: nodes, initialFloydWarshallValue: Double.infinity),
                 adjacencyMatrix: adjacencyMatrix,
                 adjacencyList: adjacencyList,
                 nodes: Set(nodes),
@@ -312,8 +314,8 @@ private extension GraphTest {
             ]
 
             return Fixture<FixtureGraphType>(
-                adjacencyListRepresentation: Graph(adjacencyList: adjacencyList),
-                adjacencyMatrixRepresentation: Graph<FixtureGraphType>(adjacencyMatrix: adjacencyMatrix, nodes: nodes),
+                adjacencyListRepresentation: Graph(adjacencyList: adjacencyList, initialFloydWarshallValue: Double.infinity),
+                adjacencyMatrixRepresentation: Graph<FixtureGraphType>(adjacencyMatrix: adjacencyMatrix, nodes: nodes, initialFloydWarshallValue: Double.infinity),
                 adjacencyMatrix: adjacencyMatrix,
                 adjacencyList: adjacencyList,
                 nodes: Set(nodes),
@@ -381,8 +383,8 @@ private extension GraphTest {
             ]
 
             return Fixture<FixtureGraphType>(
-                adjacencyListRepresentation: Graph(adjacencyList: adjacencyList),
-                adjacencyMatrixRepresentation: Graph<FixtureGraphType>(adjacencyMatrix: adjacencyMatrix, nodes: nodes),
+                adjacencyListRepresentation: Graph(adjacencyList: adjacencyList, initialFloydWarshallValue: Double.infinity),
+                adjacencyMatrixRepresentation: Graph<FixtureGraphType>(adjacencyMatrix: adjacencyMatrix, nodes: nodes, initialFloydWarshallValue: Double.infinity),
                 adjacencyMatrix: adjacencyMatrix,
                 adjacencyList: adjacencyList,
                 nodes: Set(nodes),
