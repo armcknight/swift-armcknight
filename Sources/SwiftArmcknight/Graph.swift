@@ -219,16 +219,81 @@ public class Graph<EdgeType: EdgeProtocol>: LosslessGraphVizDotDescriptionConver
     /// - Returns: the shortest path by number of edges from `start` to `end`.
     /// - Note: Used for finding the shortest path between two nodes, testing if a graph is bipartite, finding all connected components in a graph, etc.
     /// - Note: Optimal for finding the shortest distance vs `dfs`.
-    func breadthFirstSearch(from start: EdgeType.NodeType, to end: EdgeType.NodeType) -> [EdgeType.NodeType] {
-        // TODO: implement
-        return []
+    /// - note: The following logic in this scope and related code added with it is
+    /// based on the implementation of Djikstra's algorithm from the Swift
+    /// Algorithm Club, which requires the following license text to appear
+    /// with it:
+    /// ```
+    /// Copyright (c) 2016 Matthijs Hollemans and contributors
+    ///
+    /// Permission is hereby granted, free of charge, to any person obtaining a copy
+    /// of this software and associated documentation files (the "Software"), to deal
+    /// in the Software without restriction, including without limitation the rights
+    /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    /// copies of the Software, and to permit persons to whom the Software is
+    /// furnished to do so, subject to the following conditions:
+    ///
+    /// The above copyright notice and this permission notice shall be included in
+    /// all copies or substantial portions of the Software.
+    ///
+    /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    /// THE SOFTWARE.
+    /// ```
+    func breadthFirstSearch(from start: EdgeType.NodeType) -> [EdgeType.NodeType] {
+        var queue = [start]
+        var nodesExplored = [start]
+        while let node = queue.popLast() {
+            for neighborNode in edges(leaving: node).map({ $0.b }) {
+                if !nodesExplored.contains(neighborNode) {
+                    queue.insert(neighborNode, at: 0)
+                    nodesExplored.append(neighborNode)
+                }
+            }
+        }
+
+        return nodesExplored
     }
 
     /// - Returns: the shortest path by number of edges from `start` to `end`.
     /// - Note: Used for topological sorting, solving problems that require graph backtracking, detecting cycles in a graph, finding paths between two nodes, etc.
-    func depthFirstSearch(from start: EdgeType.NodeType, to end: EdgeType.NodeType) -> [EdgeType.NodeType] {
-        // TODO: implement
-        return []
+    /// - note: The following logic in this scope and related code added with it is
+    /// based on the implementation of Djikstra's algorithm from the Swift
+    /// Algorithm Club, which requires the following license text to appear
+    /// with it:
+    /// ```
+    /// Copyright (c) 2016 Matthijs Hollemans and contributors
+    ///
+    /// Permission is hereby granted, free of charge, to any person obtaining a copy
+    /// of this software and associated documentation files (the "Software"), to deal
+    /// in the Software without restriction, including without limitation the rights
+    /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    /// copies of the Software, and to permit persons to whom the Software is
+    /// furnished to do so, subject to the following conditions:
+    ///
+    /// The above copyright notice and this permission notice shall be included in
+    /// all copies or substantial portions of the Software.
+    ///
+    /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    /// THE SOFTWARE.
+    /// ``` 
+    func depthFirstSearch(from start: EdgeType.NodeType) -> [EdgeType.NodeType] {
+        var nodesExplored = [start]
+        for descendant in edges(leaving: start).map({$0.b}) {
+            if !nodesExplored.contains(descendant) {
+                nodesExplored += depthFirstSearch(from: descendant)
+            }
+        }
+        return nodesExplored
     }
 
     func minimalSpanningForest() -> Set<Graph> {
