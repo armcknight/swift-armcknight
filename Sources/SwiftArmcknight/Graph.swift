@@ -338,7 +338,6 @@ extension Graph {
      distances and paths between given pairs of start and end nodes.
      */
     struct FloydWarshallResult<T> where T: Hashable {
-
         fileprivate var weights: Distances
         fileprivate var predecessors: Predecessors
 
@@ -374,7 +373,6 @@ extension Graph {
             }
             return nil
         }
-
     }
 }
 
@@ -432,9 +430,7 @@ private extension Graph {
     /// For each iteration of `intermediateIdx`, perform the comparison for the dynamic algorithm, checking for each pair of start/end vertices, whether a path taken through another vertex produces a shorter path.
     /// - complexity: `Θ(V^2)` time/space
     /// - returns: a tuple containing the next distance matrix with weights of currently known shortest paths and the corresponding predecessor matrix
-    func nextStep(_ intermediateIdx: Int, previousDistances: Distances,
-                  previousPredecessors: Predecessors) -> StepResult {
-
+    func nextStep(_ intermediateIdx: Int, previousDistances: Distances, previousPredecessors: Predecessors) -> StepResult {
         let vertexCount = nodes.count
         var nextDistances = Array(repeating: Array(repeating: shortestPathSentinelValue, count: vertexCount), count: vertexCount)
         var nextPredecessors = Array(repeating: Array<Int?>(repeating: nil, count: vertexCount), count: vertexCount)
@@ -459,7 +455,6 @@ private extension Graph {
             }
         }
         return (nextDistances, nextPredecessors)
-
     }
 
     /**
@@ -486,7 +481,6 @@ private extension Graph {
         }
 
         return distances
-
     }
 
     /**
@@ -495,7 +489,6 @@ private extension Graph {
      - complexity: `Θ(V^2)` time/space
      */
     func constructInitialPredecessorMatrix(_ distances: Distances) -> Predecessors {
-
         let vertexCount = distances.count
         var predecessors = Array(repeating: Array<Int?>(repeating: nil, count: vertexCount), count: vertexCount)
 
@@ -508,7 +501,6 @@ private extension Graph {
         }
 
         return predecessors
-
     }
 }
 
