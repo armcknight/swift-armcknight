@@ -563,9 +563,7 @@ private extension Graph {
         }
 
         // check for negative weight cycles reachable from the source vertex
-        // TO DO: modify to incorporate solution to 24.1-4, pg 654, to set the
-        //       weight of a path containing a negative weight cycle to -∞,
-        //       instead of returning nil for the entire result
+        // TODO: modify to incorporate solution to 24.1-4, pg 654, to set the weight of a path containing a negative weight cycle to -∞, instead of returning nil for the entire result
         for edge in edges {
             if weights[edge.b.index] > weights[edge.a.index] + edge.weight {
                 return nil
