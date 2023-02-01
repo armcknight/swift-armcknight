@@ -190,21 +190,21 @@ public class Graph<EdgeType: EdgeProtocol>: LosslessGraphVizDotDescriptionConver
         }
     }()
 
-    let initialFloydWarshallValue: EdgeType.Weight
+    let shortestPathSentinelValue: EdgeType.Weight
 
-    public init(adjacencyMatrix: [[EdgeType.Weight?]], nodes: [EdgeType.NodeType], initialFloydWarshallValue: EdgeType.Weight) {
+    public init(adjacencyMatrix: [[EdgeType.Weight?]], nodes: [EdgeType.NodeType], shortestPathSentinelValue: EdgeType.Weight) {
         // We want a typed, ordered collection of unique nodes. Since there is no swift generic ordered set, we ensure that there are no duplicate nodes using a precondition.
         precondition(nodes.count == Set(nodes).count)
 
         self.initializedWithList = false
-        self.initialFloydWarshallValue = initialFloydWarshallValue
+        self.shortestPathSentinelValue = shortestPathSentinelValue
         self.adjacencyMatrix = adjacencyMatrix
         self.nodes = nodes
     }
 
-    public init(adjacencyList: [EdgeType.NodeType : Set<EdgeType>], initialFloydWarshallValue: EdgeType.Weight) {
+    public init(adjacencyList: [EdgeType.NodeType : Set<EdgeType>], shortestPathSentinelValue: EdgeType.Weight) {
         self.initializedWithList = true
-        self.initialFloydWarshallValue = initialFloydWarshallValue
+        self.shortestPathSentinelValue = shortestPathSentinelValue
         self.adjacencyList = adjacencyList
     }
 
@@ -237,13 +237,15 @@ public class Graph<EdgeType: EdgeProtocol>: LosslessGraphVizDotDescriptionConver
     }
 
     /// - Returns: the path of minimum total edge weight from `start` to `end` as an ordered collection of nodes along the path.
-    func shortestPath(from node: inout EdgeType.NodeType, to end: EdgeType.NodeType) -> [EdgeType.NodeType] {
+    func shortestPath(from node: inout EdgeType.NodeType, to end: EdgeType.NodeType) -> [EdgeType.NodeType]? {
         if hasNegativeEdgeWeights {
-            // TODO: bellman-ford
+            guard let result: BellmanFordResult<EdgeType.Weight> = bellmanFord(source: node) else {
+                return nil
+            }
+            return result.path(to: end, nodes: nodes)
         } else {
             return djikstra(from: &node, to: end)
         }
-        return []
     }
 
     /// Uses the Floyd-Warshall algorithm for computing all-pairs shortest paths in a weighted directed graph.
@@ -386,7 +388,7 @@ private extension Graph {
     /// - note: The following logic in this scope and related code added with it is
     /// based on the implementation of Djikstra's algorithm from the Swift
     /// Algorithm Club, which requires the following license text to appear
-    /// with it. However, also note that I was the contributor of this algorithm to the Swift Algorithm Club!
+    /// with it.  **However, also note that I was the contributor of this algorithm to the Swift Algorithm Club!**
     /// ```
     /// Copyright (c) 2016 Matthijs Hollemans and contributors
     ///
@@ -434,7 +436,7 @@ private extension Graph {
                   previousPredecessors: Predecessors) -> StepResult {
 
         let vertexCount = nodes.count
-        var nextDistances = Array(repeating: Array(repeating: initialFloydWarshallValue, count: vertexCount), count: vertexCount)
+        var nextDistances = Array(repeating: Array(repeating: shortestPathSentinelValue, count: vertexCount), count: vertexCount)
         var nextPredecessors = Array(repeating: Array<Int?>(repeating: nil, count: vertexCount), count: vertexCount)
 
         for fromIdx in 0 ..< vertexCount {
@@ -469,7 +471,7 @@ private extension Graph {
      - returns: weighted adjacency matrix in form ready for processing with Floyd-Warshall
      */
     func constructInitialDistanceMatrix() -> Distances {
-        var distances = Array(repeating: Array(repeating: initialFloydWarshallValue, count: nodes.count), count: nodes.count)
+        var distances = Array(repeating: Array(repeating: shortestPathSentinelValue, count: nodes.count), count: nodes.count)
 
         for row in nodes {
             for col in nodes {
@@ -499,7 +501,7 @@ private extension Graph {
 
         for fromIdx in 0 ..< vertexCount {
             for toIdx in 0 ..< vertexCount {
-                if fromIdx != toIdx && distances[fromIdx][toIdx] < initialFloydWarshallValue {
+                if fromIdx != toIdx && distances[fromIdx][toIdx] < shortestPathSentinelValue {
                     predecessors[fromIdx][toIdx] = fromIdx
                 }
             }
@@ -507,5 +509,140 @@ private extension Graph {
 
         return predecessors
 
+    }
+}
+
+// Bellman-Ford algorithm logic to compute single-source shortest paths when negative edge weights are present
+private extension Graph {
+    /// Compute the shortest path from `source` to each other vertex in `graph`,
+    /// if such paths exist. Also report negative weight cycles reachable from `source`,
+    /// which are cycles whose sum of edge weights is negative.
+    ///
+    /// - precondition: `graph` must have no negative weight cycles
+    /// - complexity: `O(VE)` time, `Θ(V)` space
+    /// - returns a `BellmanFordResult` struct which can be queried for
+    /// shortest paths and their total weights, or `nil` if a negative weight cycle exists
+    /// - note: The following logic in this scope and related code added with it is
+    /// based on the implementation of Djikstra's algorithm from the Swift
+    /// Algorithm Club, which requires the following license text to appear
+    /// with it. **However, also note that I was the contributor of this algorithm to the Swift Algorithm Club!**
+    /// ```
+    /// Copyright (c) 2016 Matthijs Hollemans and contributors
+    ///
+    /// Permission is hereby granted, free of charge, to any person obtaining a copy
+    /// of this software and associated documentation files (the "Software"), to deal
+    /// in the Software without restriction, including without limitation the rights
+    /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    /// copies of the Software, and to permit persons to whom the Software is
+    /// furnished to do so, subject to the following conditions:
+    ///
+    /// The above copyright notice and this permission notice shall be included in
+    /// all copies or substantial portions of the Software.
+    ///
+    /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    /// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    /// THE SOFTWARE.
+    /// ```
+    func bellmanFord<T>(source: EdgeType.NodeType) -> BellmanFordResult<T>? where T: EdgeWeightType {
+        var predecessors = Array<Int?>(repeating: nil, count: nodes.count)
+        var weights = Array(repeating: shortestPathSentinelValue, count: nodes.count)
+        predecessors[source.index] = source.index
+        weights[source.index] = 0 as! EdgeType.Weight
+
+        for _ in 0 ..< nodes.count - 1 {
+            var weightsUpdated = false
+            edges.forEach { edge in
+                let weight = edge.weight
+                let relaxedDistance = weights[edge.a.index] + weight
+                let nextVertexIdx = edge.b.index
+                if relaxedDistance < weights[nextVertexIdx] {
+                    predecessors[nextVertexIdx] = edge.a.index
+                    weights[nextVertexIdx] = relaxedDistance
+                    weightsUpdated = true
+                }
+            }
+            if !weightsUpdated {
+                break
+            }
+        }
+
+        // check for negative weight cycles reachable from the source vertex
+        // TO DO: modify to incorporate solution to 24.1-4, pg 654, to set the
+        //       weight of a path containing a negative weight cycle to -∞,
+        //       instead of returning nil for the entire result
+        for edge in edges {
+            if weights[edge.b.index] > weights[edge.a.index] + edge.weight {
+                return nil
+            }
+        }
+
+        return BellmanFordResult(predecessors: predecessors, weights: weights, shortestPathSentinelValue: shortestPathSentinelValue)
+    }
+
+    /**
+     `BellmanFordResult` encapsulates the result of the computation,
+     namely the minimized distances, and the predecessor indices.
+
+     It conforms to the `SSSPResult` procotol which provides methods to
+     retrieve distances and paths between given pairs of start and end nodes.
+     */
+    struct BellmanFordResult<T> where T: EdgeWeightType {
+        var predecessors: [Int?]
+        var weights: [EdgeType.Weight]
+        var shortestPathSentinelValue: EdgeType.Weight
+
+        /**
+         - returns: the total weight of the path from the source vertex to a destination.
+         This value is the minimal connected weight between the two vertices, or `nil` if no path exists
+         - complexity: `Θ(1)` time/space
+         */
+        func distance(to: EdgeType.NodeType) -> EdgeType.Weight? {
+            let distance = weights[to.index]
+
+            guard distance != shortestPathSentinelValue else {
+                return nil
+            }
+
+            return distance
+        }
+
+        /**
+         - returns: the reconstructed path from the source vertex to a destination,
+         as an array containing the data property of each vertex, or `nil` if no path exists
+         - complexity: `Θ(V)` time, `Θ(V^2)` space
+         */
+        public func path(to: EdgeType.NodeType, nodes: [EdgeType.NodeType]) -> [EdgeType.NodeType]? {
+            guard weights[to.index] != shortestPathSentinelValue else {
+                return nil
+            }
+
+            return recursePath(to: to, path: [to], nodes: nodes)
+        }
+
+        /**
+         The recursive component to rebuilding the shortest path between two vertices using predecessors.
+
+         - returns: the list of predecessors discovered so far, or `nil` if the next vertex has no predecessor
+         */
+        fileprivate func recursePath(to: EdgeType.NodeType, path: [EdgeType.NodeType], nodes: [EdgeType.NodeType]) -> [EdgeType.NodeType]? {
+            guard let predecessorIdx = predecessors[to.index] else {
+                return nil
+            }
+
+            let predecessor = nodes[predecessorIdx]
+            if predecessor.index == to.index {
+                return [ to ]
+            }
+
+            guard let buildPath = recursePath(to: predecessor, path: path, nodes: nodes) else {
+                return nil
+            }
+
+            return buildPath + [ to ]
+        }
     }
 }

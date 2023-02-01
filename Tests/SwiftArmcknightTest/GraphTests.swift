@@ -241,8 +241,8 @@ private extension GraphTest {
             ]
 
             return Fixture<FixtureGraphType>(
-                adjacencyListRepresentation: Graph(adjacencyList: adjacencyList, initialFloydWarshallValue: Double.infinity),
-                adjacencyMatrixRepresentation: Graph<FixtureGraphType>(adjacencyMatrix: adjacencyMatrix, nodes: nodes, initialFloydWarshallValue: Double.infinity),
+                adjacencyListRepresentation: Graph(adjacencyList: adjacencyList, shortestPathSentinelValue: Double.infinity),
+                adjacencyMatrixRepresentation: Graph<FixtureGraphType>(adjacencyMatrix: adjacencyMatrix, nodes: nodes, shortestPathSentinelValue: Double.infinity),
                 adjacencyMatrix: adjacencyMatrix,
                 adjacencyList: adjacencyList,
                 nodes: Set(nodes),
@@ -275,8 +275,8 @@ private extension GraphTest {
             let adjacencyList = [Node<String> : Set<FixtureGraphType>]()
 
             return Fixture<FixtureGraphType>(
-                adjacencyListRepresentation: Graph(adjacencyList: adjacencyList, initialFloydWarshallValue: Double.infinity),
-                adjacencyMatrixRepresentation: Graph<FixtureGraphType>(adjacencyMatrix: adjacencyMatrix, nodes: nodes, initialFloydWarshallValue: Double.infinity),
+                adjacencyListRepresentation: Graph(adjacencyList: adjacencyList, shortestPathSentinelValue: Double.infinity),
+                adjacencyMatrixRepresentation: Graph<FixtureGraphType>(adjacencyMatrix: adjacencyMatrix, nodes: nodes, shortestPathSentinelValue: Double.infinity),
                 adjacencyMatrix: adjacencyMatrix,
                 adjacencyList: adjacencyList,
                 nodes: Set(nodes),
@@ -314,8 +314,8 @@ private extension GraphTest {
             ]
 
             return Fixture<FixtureGraphType>(
-                adjacencyListRepresentation: Graph(adjacencyList: adjacencyList, initialFloydWarshallValue: Double.infinity),
-                adjacencyMatrixRepresentation: Graph<FixtureGraphType>(adjacencyMatrix: adjacencyMatrix, nodes: nodes, initialFloydWarshallValue: Double.infinity),
+                adjacencyListRepresentation: Graph(adjacencyList: adjacencyList, shortestPathSentinelValue: Double.infinity),
+                adjacencyMatrixRepresentation: Graph<FixtureGraphType>(adjacencyMatrix: adjacencyMatrix, nodes: nodes, shortestPathSentinelValue: Double.infinity),
                 adjacencyMatrix: adjacencyMatrix,
                 adjacencyList: adjacencyList,
                 nodes: Set(nodes),
@@ -383,8 +383,8 @@ private extension GraphTest {
             ]
 
             return Fixture<FixtureGraphType>(
-                adjacencyListRepresentation: Graph(adjacencyList: adjacencyList, initialFloydWarshallValue: Double.infinity),
-                adjacencyMatrixRepresentation: Graph<FixtureGraphType>(adjacencyMatrix: adjacencyMatrix, nodes: nodes, initialFloydWarshallValue: Double.infinity),
+                adjacencyListRepresentation: Graph(adjacencyList: adjacencyList, shortestPathSentinelValue: Double.infinity),
+                adjacencyMatrixRepresentation: Graph<FixtureGraphType>(adjacencyMatrix: adjacencyMatrix, nodes: nodes, shortestPathSentinelValue: Double.infinity),
                 adjacencyMatrix: adjacencyMatrix,
                 adjacencyList: adjacencyList,
                 nodes: Set(nodes),
