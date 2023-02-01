@@ -192,11 +192,11 @@ private extension GraphTest {
          * ```
          */
         private lazy var fullyConnectedGraph: Fixture<FixtureGraphType> = {
-            let a = Node(value: "a", index: 0)
-            let b = Node(value: "b", index: 1)
-            let c = Node(value: "c", index: 2)
-            let d = Node(value: "d", index: 3)
-            let e = Node(value: "e", index: 4)
+            let a = Node(value: "a", index: 0, initialDjikstraWeight: Double.infinity)
+            let b = Node(value: "b", index: 1, initialDjikstraWeight: Double.infinity)
+            let c = Node(value: "c", index: 2, initialDjikstraWeight: Double.infinity)
+            let d = Node(value: "d", index: 3, initialDjikstraWeight: Double.infinity)
+            let e = Node(value: "e", index: 4, initialDjikstraWeight: Double.infinity)
 
             let nodes = [a, b, c, d, e]
 
@@ -295,11 +295,11 @@ private extension GraphTest {
          * A graph with nodes but no edges.
          */
         private lazy var fullyDisconnectedGraph: Fixture<FixtureGraphType> = {
-            let a = Node(value: "a", index: 0)
-            let b = Node(value: "b", index: 1)
-            let c = Node(value: "c", index: 2)
-            let d = Node(value: "d", index: 3)
-            let e = Node(value: "e", index: 4)
+            let a = Node(value: "a", index: 0, initialDjikstraWeight: Double.infinity)
+            let b = Node(value: "b", index: 1, initialDjikstraWeight: Double.infinity)
+            let c = Node(value: "c", index: 2, initialDjikstraWeight: Double.infinity)
+            let d = Node(value: "d", index: 3, initialDjikstraWeight: Double.infinity)
+            let e = Node(value: "e", index: 4, initialDjikstraWeight: Double.infinity)
             let nodes = [a, b, c, d, e]
             let adjacencyMatrix: [[Double?]] = Array(repeating: Array(repeating: nil, count: nodes.count), count: nodes.count)
             let edges = [FixtureGraphType]()
@@ -340,11 +340,11 @@ private extension GraphTest {
          * A graph with multiple connected subgraphs.
          */
         private lazy var partiallyConnectedGraph: Fixture<FixtureGraphType> = {
-            let a = Node(value: "a", index: 0)
-            let b = Node(value: "b", index: 1)
-            let c = Node(value: "c", index: 2)
-            let d = Node(value: "d", index: 3)
-            let e = Node(value: "e", index: 4)
+            let a = Node(value: "a", index: 0, initialDjikstraWeight: Double.infinity)
+            let b = Node(value: "b", index: 1, initialDjikstraWeight: Double.infinity)
+            let c = Node(value: "c", index: 2, initialDjikstraWeight: Double.infinity)
+            let d = Node(value: "d", index: 3, initialDjikstraWeight: Double.infinity)
+            let e = Node(value: "e", index: 4, initialDjikstraWeight: Double.infinity)
 
             let nodes = [a, b, c, d, e]
 
