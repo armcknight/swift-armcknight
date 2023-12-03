@@ -6,6 +6,7 @@
 //  Copyright © Andrew McKnight 2016-2022
 //
 
+import CoreGraphics
 import Foundation
 
 // MARK: Generic 2D Collections
