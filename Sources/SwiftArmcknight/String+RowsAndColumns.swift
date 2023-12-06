@@ -69,6 +69,14 @@ public extension String {
     var lines: [String] {
         return split(separator: "\n").map({String($0)})
     }
+    
+    /// Break up a multiline string into an array of arrays of lines belonging to paragraphs separated by empty lines in the original string.
+    @available(macOS 13.0, *)
+    var paragraphs: [[String]] {
+        split(separator: "\n\n").map { substring in
+            substring.split(separator: "\n")
+        }.map { $0.map { String($0) } }
+    }
 
     /// Break up a multiline string into a 2D array of all the characters. Thus '"`abc\ndef\nghi`" becomes `[['a', 'b', 'c'],['d', 'e', 'f'], ['g', 'h', 'i']]`.
     var characterGrid: [[String]] {

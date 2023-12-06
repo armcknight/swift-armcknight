@@ -24,6 +24,15 @@ public extension String {
     var ints: [Int] {
         return lines.map({Int($0)!})
     }
+    
+    /// Return an array of tuples where each tuple corresponds to the parts of each line on the left and right side of a colon (":")
+    @available(macOS 13.0, *)
+    var keyValuePairs: [(String, String)] {
+        lines.map { line in
+            let parts = line.split(separator: ": ")
+            return (String(parts[0]), String(parts[1]))
+        }
+    }
 
     /// Split a string by a delimiter and convert each element into an integer value.
     func ints(separator: Character) -> [Int] {
