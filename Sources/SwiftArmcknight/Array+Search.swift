@@ -8,14 +8,13 @@
 
 import Foundation
 
-public extension Array where Element: Strideable {
-
+public extension Array where Element: Comparable {
     /**
      - precondition: array must be sorted.
      - parameters:
-         - lowerBound: defaults to 0.
-         - upperBound: defaults to `nil`, meaning the last element in the array.
-         - query: value for which to search.
+       - lowerBound: defaults to 0.
+       - upperBound: defaults to `nil`, meaning the last element in the array.
+       - query: value for which to search.
      - returns: the position of the query in the array or `nil` if it doesn't exist in the array.
      */
     func binarySearchRecursive(lowerBound: Int = 0, upperBound: Int? = nil, query: Element) -> Int? {
@@ -43,14 +42,16 @@ public extension Array where Element: Strideable {
             return midIdx
         }
     }
+}
 
+public extension Array where Element: Strideable {
     /**
      Find the index of the element in this array that is closest to the query value. If `query` falls directly between two values, the lesser is chosen.
      - precondition: array must be sorted.
      - parameters:
-         - lowerBound: defaults to 0.
-         - upperBound: defaults to `nil`, meaning the last element in the array.
-         - query: value for which to search.
+       - lowerBound: defaults to 0.
+       - upperBound: defaults to `nil`, meaning the last element in the array.
+       - query: value for which to search.
      - returns: the position of the value nearest to query in the array.
      */
     func fuzzyBinarySearchRecursive(lowerBound: Int = 0, upperBound: Int? = nil, query: Element) -> Int {
@@ -85,5 +86,4 @@ public extension Array where Element: Strideable {
             return fuzzyBinarySearchRecursive(lowerBound: lowerBound, upperBound: midIdx, query: query)
         }
     }
-
 }
