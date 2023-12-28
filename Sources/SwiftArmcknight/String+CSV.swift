@@ -24,4 +24,14 @@ public extension String {
         })
         return valueRowComponents
     }
+    
+    /// For a CSV field surrounded by double quotes (like those that might contain a comma that should not delimit a next field), if it also contains a double quote within the field value, that double quote should be escaped by another double quote
+    /// e.g. for a field containing the string `Quote: "I think, therefore I am"` would be rendered as `"Quote: ""I think, therefore I am"""`
+    /// - seealso: https://stackoverflow.com/a/17808731 and https://www.ietf.org/rfc/rfc4180.txt
+    var rfc4180CompliantFieldWithDoubleQuotes: String {
+        if self.first == "\"" && self.last == "\"" {
+            return replacingOccurrences(of: "\"", with: "\"\"", range: index(startIndex, offsetBy: 1)..<index(startIndex, offsetBy: count - 1))
+        }
+        return self
+    }
 }
