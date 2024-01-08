@@ -29,8 +29,10 @@ public extension String {
     /// e.g. for a field containing the string `Quote: "I think, therefore I am"` would be rendered as `"Quote: ""I think, therefore I am"""`
     /// - seealso: https://stackoverflow.com/a/17808731 and https://www.ietf.org/rfc/rfc4180.txt
     var rfc4180CompliantFieldWithDoubleQuotes: String {
-        if self.first == "\"" && self.last == "\"" {
-            return replacingOccurrences(of: "\"", with: "\"\"", range: index(startIndex, offsetBy: 1)..<index(startIndex, offsetBy: count - 1))
+        guard count > 2 else { return self }
+        let replacementRange = index(startIndex, offsetBy: 1)..<index(startIndex, offsetBy: count - 1)
+        if self.first == "\"" && self.last == "\"" && self[replacementRange].contains("\"") && !self[replacementRange].contains("\"\"") {
+            return replacingOccurrences(of: "\"", with: "\"\"", range: replacementRange)
         }
         return self
     }
