@@ -36,4 +36,14 @@ public extension String {
         }
         return self
     }
+    
+    /// The inverse of the operation performed in `String.rfc4180CompliantFieldWithDoubleQuotes` above.
+    var valueOfRFC4180CompliantFieldWithDoubleQuotes: String {
+        guard count > 2 else { return self }
+        let replacementRange = index(startIndex, offsetBy: 1)..<index(startIndex, offsetBy: count - 1)
+        if self.first == "\"" && self.last == "\"" && self[replacementRange].contains("\"\"") {
+            return replacingOccurrences(of: "\"\"", with: "\"", range: replacementRange)
+        }
+        return self        
+    }
 }
