@@ -26,7 +26,9 @@ public extension String {
     /// - returns: the substring between the two provided strings (not inclusive).
     func substring(from: String, to: String) -> String {
         let startRange = (self as NSString).range(of: from)
-        let endRange = (self as NSString).range(of: to)
+        let lengthToEndOfStartRange = startRange.location + startRange.length
+        let remainingLength = count - lengthToEndOfStartRange
+        let endRange = (self as NSString).range(of: to, range: NSRange(location: startRange.location + startRange.length, length: remainingLength))
         let startIdx = self.index(self.startIndex, offsetBy: (startRange.location + startRange.length))
         let endIdx = self.index(self.startIndex, offsetBy: endRange.location)
         return String(self[startIdx ..< endIdx]).trimmingCharacters(in: .newlines)
