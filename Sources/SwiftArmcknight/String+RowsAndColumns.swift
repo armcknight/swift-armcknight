@@ -71,7 +71,7 @@ public extension String {
     }
     
     /// Break up a multiline string into an array of arrays of lines belonging to paragraphs separated by empty lines in the original string.
-    @available(macOS 13.0, *)
+    @available(macOS 13.0, iOS 16.0, *)
     var paragraphs: [[String]] {
         split(separator: "\n\n").map { substring in
             substring.split(separator: "\n")

@@ -8,6 +8,7 @@
 
 import Foundation
 
+#if os(macOS)
 public extension Process {
     static func run(_ path: String, cwd: URL? = nil, _ arguments: String ...) {
         _run(path, cwd: cwd, Array(arguments))
@@ -65,4 +66,4 @@ public extension Process {
         try! process.run()
     }
 }
-
+#endif // os(macOS)

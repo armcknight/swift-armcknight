@@ -26,7 +26,7 @@ public extension String {
     }
     
     /// Return an array of tuples where each tuple corresponds to the parts of each line on the left and right side of a colon (":")
-    @available(macOS 13.0, *)
+    @available(macOS 13.0, iOS 16.0, *)
     var keyValuePairs: [(String, String)] {
         lines.map { line in
             let parts = line.split(separator: ": ")
