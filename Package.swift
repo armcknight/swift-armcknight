@@ -15,6 +15,9 @@ let package = Package(
             name: "SwiftArmcknight",
             targets: ["SwiftArmcknight"]),
         .library(
+            name: "SwiftArmcknightMath",
+            targets: ["SwiftArmcknightMath"]),
+        .library(
             name: "SwiftArmcknightUIKit",
             targets: ["SwiftArmcknightUIKit"]),
         .library(
@@ -24,6 +27,13 @@ let package = Package(
     targets: [
         .target(
             name: "SwiftArmcknight"
+        ),
+        .target(
+            name: "CGeometryPredicates"
+        ),
+        .target(
+            name: "SwiftArmcknightMath",
+            dependencies: ["SwiftArmcknight", "CGeometryPredicates"]
         ),
         .target(
             name: "SwiftArmcknightUIKit",

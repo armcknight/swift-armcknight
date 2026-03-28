@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftArmcknight
 
 public extension Sequence where Iterator.Element: AdditiveArithmetic {
     var sum: Iterator.Element {

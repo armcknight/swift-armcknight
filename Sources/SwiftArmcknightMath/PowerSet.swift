@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftArmcknight
 
 public extension Collection where Element: Hashable, Self.Index == Int {
     /// - SeeAlso: https://gist.github.com/JadenGeller/6174b3461a34465791c5#file-powerset_flatmap-swift

@@ -15,7 +15,7 @@ public struct Logging {
 
 }
 
-internal func log(_ message: String) {
+public func log(_ message: String) {
     #if DEBUG
     Logging.logBlock?(message)
     #endif
