@@ -64,8 +64,8 @@ public extension Edge {
 extension Edge: Hashable {
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(a)
-        hasher.combine(b)
+        // Order-independent hash to match undirected equality (A,B) == (B,A)
+        hasher.combine(endpoints())
     }
 
 }
