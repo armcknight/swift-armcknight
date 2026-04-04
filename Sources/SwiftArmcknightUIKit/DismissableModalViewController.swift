@@ -54,7 +54,11 @@ private extension DismissableModalViewController {
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         closeButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
         
-        let titleLabel = UILabel.label(withText: title ?? "", font: titleFont, textColor: tintColor, alignment: .center)
+        let titleLabel = PaddedLabel(insets: UIEdgeInsets(top: 4, left: 8, bottom: 8, right: 8))
+        titleLabel.text = title ?? ""
+        titleLabel.font = titleFont
+        titleLabel.textColor = tintColor
+        titleLabel.textAlignment = .center
         titleLabel.minimumScaleFactor = 0.5
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.allowsDefaultTighteningForTruncation = true
