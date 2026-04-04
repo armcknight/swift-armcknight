@@ -13,4 +13,9 @@ public extension UserDefaults {
         standard.set(value, forKey: key)
         standard.synchronize()
     }
+
+    func setAndSynchronize(key: String, value: Any?) {
+        set(value, forKey: key)
+        synchronize()
+    }
 }
