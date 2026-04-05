@@ -50,7 +50,7 @@ public class DismissableModalViewController: UIViewController {
 
 private extension DismissableModalViewController {
     func headerView(tintColor: UIColor, imageBundle: Bundle, titleFont: UIFont) -> UIView {
-        let closeButton = UIButton.button(withImageSetName: "close", emphasisSuffix: "-filled", tintColor: tintColor, imageBundle: imageBundle)
+        let closeButton = UIButton.sfSymbolButton(name: "xmark.circle", tintColor: tintColor)
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         closeButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
         

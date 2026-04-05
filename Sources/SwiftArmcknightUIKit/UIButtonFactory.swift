@@ -39,6 +39,23 @@ public extension UIButton {
         return button
     }
 
+    class func sfSymbolButton(name: String, title: String? = nil, tintColor: UIColor = .white, font: UIFont? = nil, target: Any? = nil, selector: Selector? = nil) -> UIButton {
+        let button = UIButton(type: .system)
+        let config = UIImage.SymbolConfiguration(scale: .large)
+        let image = UIImage(systemName: name, withConfiguration: config)
+        button.setImage(image, for: .normal)
+        button.tintColor = tintColor
+        if let title = title {
+            button.setTitle(" \(title)", for: .normal)
+            button.setTitleColor(tintColor, for: .normal)
+        }
+        button.titleLabel?.font = font
+        if let selector = selector {
+            button.addTarget(target, action: selector, for: .touchUpInside)
+        }
+        return button
+    }
+
     func configure(withImageSetName imageSetName: String? = nil, emphasisSuffix: String = "", title: String? = nil, tintColor color: UIColor = .black, font: UIFont = UIFont.systemFont(ofSize: 17), target: Any? = nil, selector: Selector? = nil, imageBundle: Bundle? = nil) {
         setTitle(title, for: .normal)
 
