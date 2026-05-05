@@ -53,10 +53,12 @@ private extension DismissableModalViewController {
         let closeButton = UIButton.sfSymbolButton(name: "xmark.circle", tintColor: tintColor)
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         closeButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        
+        closeButton.heightAnchor.constraint(equalTo: closeButton.widthAnchor).isActive = true
+
         let titleLabel = PaddedLabel(insets: UIEdgeInsets(top: 4, left: 8, bottom: 8, right: 8))
         titleLabel.text = title ?? ""
         titleLabel.font = titleFont
+        titleLabel.adjustsFontForContentSizeCategory = true
         titleLabel.textColor = tintColor
         titleLabel.textAlignment = .center
         titleLabel.minimumScaleFactor = 0.5
@@ -65,7 +67,7 @@ private extension DismissableModalViewController {
 
         let stack = UIStackView(arrangedSubviews: [titleLabel, closeButton])
         stack.spacing = CGFloat.horizontalSpacing
-        stack.alignment = .top
+        stack.alignment = .center
 
         return stack
     }
