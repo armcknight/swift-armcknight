@@ -14,12 +14,13 @@ public class DismissableModalViewController: UIViewController {
 
     private var closeBlock: (() -> ())?
     private let contentView = UIView(frame: .zero)
+    private weak var closeButton: UIButton?
 
     public init(childViewController: UIViewController, titleFont: UIFont, backgroundColor: UIColor = .clear, tintColor: UIColor = .white, imageBundle: Bundle = Bundle(for: DismissableModalViewController.self), insets: UIEdgeInsets = .zero, onClose closeBlock: (() -> ())? = nil) {
         super.init(nibName: nil, bundle: nil)
 
         title = childViewController.title
-        
+
         view.backgroundColor = backgroundColor
 
         addNewChildViewController(newChildViewController: childViewController, containerView: contentView)
@@ -34,8 +35,15 @@ public class DismissableModalViewController: UIViewController {
         stack.fillSafeArea(inViewController: self, insets: .all(10))
 
         self.closeBlock = closeBlock
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(contentSizeCategoryChanged),
+            name: UIContentSizeCategory.didChangeNotification,
+            object: nil
+        )
     }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -46,14 +54,24 @@ public class DismissableModalViewController: UIViewController {
         guard let closeBlock = closeBlock else { return }
         DispatchQueue.main.async(execute: closeBlock)
     }
+
+    func contentSizeCategoryChanged() {
+        let config = UIImage.SymbolConfiguration(textStyle: .body, scale: .large)
+        closeButton?.setImage(UIImage(systemName: "xmark.circle", withConfiguration: config), for: .normal)
+        closeButton?.invalidateIntrinsicContentSize()
+        view.setNeedsLayout()
+    }
 }
 
 private extension DismissableModalViewController {
     func headerView(tintColor: UIColor, imageBundle: Bundle, titleFont: UIFont) -> UIView {
         let closeButton = UIButton.sfSymbolButton(name: "xmark.circle", tintColor: tintColor)
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        closeButton.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(textStyle: .body, scale: .large), forImageIn: .normal)
         closeButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
         closeButton.heightAnchor.constraint(equalTo: closeButton.widthAnchor).isActive = true
+        closeButton.setContentHuggingPriority(.required, for: .horizontal)
+        self.closeButton = closeButton
 
         let titleLabel = PaddedLabel(insets: UIEdgeInsets(top: 4, left: 8, bottom: 8, right: 8))
         titleLabel.text = title ?? ""
