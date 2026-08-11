@@ -6,6 +6,7 @@
 //
 
 @testable import SwiftArmcknight
+@testable import SwiftArmcknightMath
 import XCTest
 
 final class GraphTest: XCTestCase {
@@ -40,8 +41,12 @@ final class GraphTest: XCTestCase {
 
     func testAdjacencyListNodes() {
         fixtures.all.forEach { name, fixture in
-            let expected = Set(fixture.nodes).hashValue
-            let computed = fixture.adjacencyListRepresentation.nodes.hashValue
+            // Compared as sets, not by hashValue: a representation hands back
+            // `[NodeType]` while the fixture holds a `Set`, so their hashes can
+            // never agree however equal the contents are. Order carries no
+            // meaning here either.
+            let expected = Set(fixture.nodes)
+            let computed = Set(fixture.adjacencyListRepresentation.nodes)
             XCTAssertEqual(computed, expected, "Nodes from adjacency list did not match input nodes for \(name)")
         }
     }
@@ -56,8 +61,8 @@ final class GraphTest: XCTestCase {
 
     func testAdjacencyMatrixNodes() {
         fixtures.all.forEach { name, fixture in
-            let expected = Set(fixture.nodes).hashValue
-            let computed = fixture.adjacencyMatrixRepresentation.nodes.hashValue
+            let expected = Set(fixture.nodes)
+            let computed = Set(fixture.adjacencyMatrixRepresentation.nodes)
             XCTAssertEqual(computed, expected, "Nodes from adjacency matrix did not match input nodes for \(name)")
         }
     }

@@ -7,6 +7,7 @@
 //
 
 import SwiftArmcknight
+import SwiftArmcknightMath
 import XCTest
 
 class Array_PowerSet_Test: XCTestCase {
